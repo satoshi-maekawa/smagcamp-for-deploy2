@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 import { ItemRegistration } from './components/ItemRegistration';
 import { BringList } from './components/BringList';
 import { CompleteList } from './components/CompleteList';
-import { Login } from './components/Login';
+// import { Login } from './components/Login';
 import { UserRegistration } from './components/UserRegistration';
+const API_URL = "https://product-smagcamp2-server.onrender.com";
 
 function App() {
-  const [view, setView] = useState('Login');
+  const [view, setView] = useState('ItemList');
+  // const [view, setView] = useState('Login');
   const pageChange = (name) => setView(name);
   const [allItems, setAllItem] = useState([]);
   const [putBringItem, setPutBringItem] = useState([]);
@@ -21,12 +23,14 @@ function App() {
   // ユーザーがログイン済みか判定
   useEffect(() => {
     const user = localStorage.getItem('user');
-    user ? setView('ItemList') : setView('Login');
+    user ? setView('ItemList') : setView('ItemList');
+    // user ? setView('ItemList') : setView('Login');
   }, []);
   // 全アイテム取得
   const fetchItem = async () => {
     try {
-      const res = await fetch('http://localhost:8080/allItems');
+      const res = await fetch(`${API_URL}/allItems`);
+      // const res = await fetch('http://localhost:8080/allItems');
       const data = await res.json();
       const gearItem = data.filter((el) => el.categoryName_id === '1');
       const ingredientsItem = data.filter((el) => el.categoryName_id === '2');
@@ -51,7 +55,8 @@ function App() {
   // Bringアイテム取得
   const fetchBringItem = async () => {
     try {
-      const res = await fetch('http://localhost:8080/bringItems');
+      const res = await fetch(`${API_URL}/bringItems`);
+      // const res = await fetch('http://localhost:8080/bringItems');
       const data = await res.json();
       const gearItem = data.filter((el) => el.categoryName_id === '1');
       const ingredientsItem = data.filter((el) => el.categoryName_id === '2');
@@ -74,7 +79,7 @@ function App() {
       case 'Login':
         return (
           <div>
-            <Login view={view} pageChange={pageChange} />
+            {/* <Login view={view} pageChange={pageChange} /> */}
           </div>
         );
       case 'UserRegistration':
